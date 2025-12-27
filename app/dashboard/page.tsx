@@ -63,7 +63,7 @@ export default function Dashboard() {
           </div>
           <Link
             href={'/dashboard/campaigns/create'}
-            className="bg-[#433F39] text-[#FAF9F6] px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center gap-2"
+            className="bg-[#433F39] text-[#FAF9F6] px-6 py-2.5 rounded-full text-xs font-medium hover:bg-[#2D2A26] transition-all flex items-center gap-2"
           >
             <Plus size={16} /> New Campaign
           </Link>
@@ -87,7 +87,7 @@ export default function Dashboard() {
                   </p>
                 </div>
               </div>
-              <button className="bg-[#433F39] cursor-pointer text-[#FAF9F6] px-6 py-2 rounded-full text-sm font-bold hover:shadow-lg transition-all">
+              <button className="bg-[#433F39] cursor-pointer text-[#FAF9F6] px-6 py-2 rounded-full text-xs font-bold hover:shadow-lg transition-all">
                 Setup Now
               </button>
             </div>

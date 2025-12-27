@@ -77,7 +77,7 @@ export default function CampaignSection() {
           </div>
           <Link
             href={'/dashboard/campaigns/create'}
-            className="bg-[#433F39] cursor-pointer text-[#FAF9F6] px-8 py-3 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center justify-center gap-2 shadow-sm"
+            className="bg-[#433F39] cursor-pointer text-[#FAF9F6] px-8 py-3 rounded-full text-xs font-medium hover:bg-[#2D2A26] transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             + Create New
           </Link>

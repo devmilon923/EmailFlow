@@ -44,15 +44,15 @@ export default function TemplateCard({
         </div>
         <div className="flex gap-2">
           {template?.isFree ? (
-            <button className="flex-1 bg-[#433F39] text-[#FAF9F6] py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
+            <button className="flex-1 cursor-pointer bg-[#433F39] text-[#FAF9F6] py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
               Add To List
             </button>
           ) : (
-            <button className="flex-1 bg-[#433F39] text-[#FAF9F6] py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
+            <button className="flex-1 cursor-pointer bg-[#433F39] text-[#FAF9F6] py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
               Buy Now
             </button>
           )}
-          <button className="p-3 border border-[#E9E4DB] rounded-xl hover:bg-[#FAF9F6]">
+          <button className="p-3 border border-[#E9E4DB] rounded-xl cursor-pointer hover:bg-[#FAF9F6]">
             <ShoppingCart size={16} className="text-[#8C867A]" />
           </button>
         </div>

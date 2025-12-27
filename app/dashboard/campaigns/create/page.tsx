@@ -104,9 +104,9 @@ export default function CreateCampaign() {
 
   return (
     <div className="min-h-screen w-full bg-[#FAF9F6] text-[#433F39] flex flex-col items-center">
-      <div className="max-w-275 w-full p-4 md:p-10 space-y-10">
+      <div className="w-full py-4 md:py-10 space-y-10">
         {/* Header with Multi-Action Buttons */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#E9E4DB] pb-8">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#E9E4DB] py-8">
           <div>
             <h2 className="text-3xl font-serif italic">New Campaign</h2>
             <p className="text-[#8C867A] text-sm mt-1">
@@ -118,7 +118,7 @@ export default function CreateCampaign() {
             <button
               onClick={() => handleAction('draft')}
               disabled={formData.emailsArray.length === 0 || !formData.subject}
-              className="flex items-center cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed gap-2 px-6 py-4 rounded-full border border-[#E9E4DB] bg-white text-xs font-bold uppercase tracking-widest hover:bg-[#F3EFE7] transition-all"
+              className="flex items-center cursor-pointer  disabled:cursor-not-allowed gap-2 px-6 py-4 rounded-full border border-[#E9E4DB] bg-white text-xs font-bold uppercase tracking-widest hover:bg-[#F3EFE7] transition-all"
             >
               <Save size={16} /> Save Draft
             </button>
@@ -133,7 +133,7 @@ export default function CreateCampaign() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="grid max-w-275 grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-7 space-y-8">
             {/* Subject & Body Section */}
             <div className="bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm space-y-6">

@@ -115,7 +115,7 @@ export default function TemplateMarketplace() {
                 className="bg-white border border-[#E9E4DB] rounded-full py-3 pl-12 pr-6 text-sm outline-none w-48 md:w-64"
               />
             </div>
-            <button className="bg-white border border-[#E9E4DB] p-3 rounded-full relative">
+            <button className="bg-white border cursor-pointer border-[#E9E4DB] p-3 rounded-full relative">
               <ShoppingCart size={20} />
               <span className="absolute -top-1 -right-1 bg-[#433F39] text-white text-[8px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
                 2
@@ -131,7 +131,7 @@ export default function TemplateMarketplace() {
               (cat, i) => (
                 <button
                   key={cat}
-                  className={`px-5 py-2 rounded-full text-[10px] uppercase font-bold tracking-widest whitespace-nowrap transition-all ${i === 0 ? 'bg-[#433F39] text-white' : 'bg-white border border-[#E9E4DB] text-[#8C867A]'}`}
+                  className={`px-5 py-2 rounded-full cursor-pointer text-[10px] uppercase font-bold tracking-widest whitespace-nowrap transition-all ${i === 0 ? 'bg-[#433F39] text-white' : 'bg-white border border-[#E9E4DB] text-[#8C867A]'}`}
                 >
                   {cat}
                 </button>
@@ -142,7 +142,7 @@ export default function TemplateMarketplace() {
           <div className="relative">
             <button
               onClick={() => setShowSortDropdown(!showSortDropdown)}
-              className="flex items-center gap-3 bg-white border border-[#E9E4DB] px-6 py-2.5 rounded-full text-[10px] uppercase font-bold tracking-widest text-[#433F39] hover:border-[#433F39] transition-all"
+              className="flex items-center gap-3 cursor-pointer bg-white border border-[#E9E4DB] px-6 py-2.5 rounded-full text-[10px] uppercase font-bold tracking-widest text-[#433F39] hover:border-[#433F39] transition-all"
             >
               <ArrowUpDown size={14} /> Sort: {activeSort}{' '}
               <ChevronDown
@@ -162,7 +162,7 @@ export default function TemplateMarketplace() {
                         setActiveSort(option);
                         setShowSortDropdown(false);
                       }}
-                      className="w-full flex items-center justify-between px-4 py-3 text-[10px] uppercase font-bold tracking-widest hover:bg-[#FAF9F6] rounded-xl transition-colors group"
+                      className="w-full cursor-pointer flex items-center justify-between px-4 py-3 text-[10px] uppercase font-bold tracking-widest hover:bg-[#FAF9F6] rounded-xl transition-colors group"
                     >
                       <span
                         className={
