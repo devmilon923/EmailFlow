@@ -258,7 +258,7 @@ export default function CreateCampaign() {
                     Recipients
                     {formData.emailsArray.length > 0 && (
                       <span className="text-green-600 flex items-center gap-1">
-                        <FileCheck size={12} /> Deduplicated
+                        <FileCheck size={12} /> Ready
                       </span>
                     )}
                   </div>
@@ -268,7 +268,7 @@ export default function CreateCampaign() {
                       onClick={() =>
                         setFormData({ ...formData, emailsArray: [] })
                       }
-                      className="text-[10px] font-bold text-red-400 hover:text-red-600 uppercase tracking-wider"
+                      className="text-[10px] cursor-pointer font-bold text-red-400 hover:text-red-600 uppercase tracking-wider"
                     >
                       Clear All
                     </button>

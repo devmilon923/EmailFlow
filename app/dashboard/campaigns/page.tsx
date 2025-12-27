@@ -101,7 +101,7 @@ export default function CampaignSection() {
               <button
                 key={status}
                 onClick={() => setFilter(status as any)}
-                className={`px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
+                className={`px-5 py-2.5 cursor-pointer rounded-xl text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap ${
                   filter === status
                     ? 'bg-[#E9E4DB] text-[#433F39]'
                     : 'text-[#BAB3A9] hover:text-[#726D64]'
