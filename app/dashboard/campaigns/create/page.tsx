@@ -90,6 +90,13 @@ export default function CreateCampaign() {
     }
   };
 
+  const removeEmailTag = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      emailsArray: prev.emailsArray.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleAction = (status: 'launch' | 'schedule' | 'draft') => {
     const payload = {
       ...formData,
@@ -226,8 +233,8 @@ export default function CreateCampaign() {
                       {email}
                       <button
                         type="button"
-                        // onClick={() => removeEmailTag(index)}
-                        className="hover:text-red-500 transition-colors"
+                        onClick={() => removeEmailTag(index)}
+                        className="hover:text-red-500 transition-colors cursor-pointer"
                       >
                         <X size={14} />
                       </button>
