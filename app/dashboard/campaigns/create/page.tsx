@@ -14,6 +14,8 @@ import {
   X,
   MailPlus,
   FileCheck,
+  Calendar,
+  Save,
 } from 'lucide-react';
 
 // --- Types ---
@@ -27,8 +29,9 @@ interface CampaignFormData {
   bodyType: 'plain' | 'template';
   templateId: string | null;
   plainBody: string;
-  emailsArray: string[]; // This is now the single source of truth for audience
+  emailsArray: string[];
 }
+
 const DUMMY_TEMPLATES: Template[] = [
   { id: 'tmp_001', name: 'Minimalist Welcome' },
   { id: 'tmp_002', name: 'Monthly Newsletter' },
@@ -48,41 +51,32 @@ export default function CreateCampaign() {
   const [isParsing, setIsParsing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // --- CSV Parsing Logic ---
+  // --- Handlers ---
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     setIsParsing(true);
     const reader = new FileReader();
-
     reader.onload = (event) => {
       const text = event.target?.result as string;
-      // Regex finds all valid email patterns globally in the file
       const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
       const foundEmails = text.match(emailRegex) || [];
-
-      // Filter out duplicates and merge with existing list
       const uniqueNewEmails = Array.from(new Set(foundEmails)).map((e) =>
         e.toLowerCase()
       );
       const mergedEmails = Array.from(
         new Set([...formData.emailsArray, ...uniqueNewEmails])
       );
-
       setFormData((prev) => ({ ...prev, emailsArray: mergedEmails }));
       setIsParsing(false);
-      if (fileInputRef.current) fileInputRef.current.value = ''; // Reset input
+      if (fileInputRef.current) fileInputRef.current.value = '';
     };
-
     reader.readAsText(file);
   };
 
-  // --- Tag Input Logic ---
   const addEmailTag = () => {
     const email = inputValue.trim().toLowerCase();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (
       email &&
       emailRegex.test(email) &&
@@ -96,64 +90,46 @@ export default function CreateCampaign() {
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      addEmailTag();
-    }
-  };
-
-  const removeEmailTag = (indexToRemove: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      emailsArray: prev.emailsArray.filter(
-        (_, index) => index !== indexToRemove
-      ),
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Unified Request Body
-    const requestBody = {
-      subject: formData.subject,
-      content: {
-        type: formData.bodyType,
-        templateId:
-          formData.bodyType === 'template' ? formData.templateId : null,
-        body: formData.bodyType === 'plain' ? formData.plainBody : null,
-      },
-      recipients: formData.emailsArray, // Same format for both manual and CSV
+  const handleAction = (status: 'launch' | 'schedule' | 'draft') => {
+    const payload = {
+      ...formData,
+      status: status,
+      timestamp: new Date().toISOString(),
     };
-
-    console.log('--- Campaign Final Payload ---', requestBody);
+    console.log(`--- Campaign Action: ${status.toUpperCase()} ---`, payload);
     alert(
-      `Ready to send to ${formData.emailsArray.length} recipients. Check console for payload.`
+      `Campaign ${status === 'draft' ? 'saved as draft' : 'processed'}. Check console.`
     );
   };
 
   return (
     <div className="min-h-screen w-full bg-[#FAF9F6] text-[#433F39] flex flex-col items-center">
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-275 w-full p-4 md:p-10 space-y-10"
-      >
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#E9E4DB] pb-8">
+      <div className="max-w-275 w-full p-4 md:p-10 space-y-10">
+        {/* Header with Multi-Action Buttons */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#E9E4DB] pb-8">
           <div>
             <h2 className="text-3xl font-serif italic">New Campaign</h2>
             <p className="text-[#8C867A] text-sm mt-1">
-              Combine manual entry and CSV uploads seamlessly.
+              Configure your message, audience, and delivery time.
             </p>
           </div>
-          <button
-            type="submit"
-            disabled={formData.emailsArray.length === 0 || !formData.subject}
-            className="bg-[#433F39] disabled:opacity-30 text-[#FAF9F6] px-10 py-4 rounded-full font-medium hover:bg-[#2D2A26] transition-all flex items-center gap-3 shadow-lg"
-          >
-            Launch Campaign <Send size={18} />
-          </button>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => handleAction('draft')}
+              className="flex items-center gap-2 px-6 py-4 rounded-full border border-[#E9E4DB] bg-white text-xs font-bold uppercase tracking-widest hover:bg-[#F3EFE7] transition-all"
+            >
+              <Save size={16} /> Save Draft
+            </button>
+
+            <button
+              onClick={() => handleAction('launch')}
+              disabled={formData.emailsArray.length === 0 || !formData.subject}
+              className="bg-[#433F39] disabled:opacity-30 text-[#FAF9F6] gap-2 px-6 py-4 rounded-full font-bold text-xs hover:bg-[#2D2A26] transition-all flex items-center  shadow-lg"
+            >
+              Launch Now <Send size={15} />
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -213,17 +189,15 @@ export default function CreateCampaign() {
                   className="w-full h-40 bg-[#FAF9F6] border border-[#E9E4DB] rounded-2xl p-6 outline-none text-sm resize-none"
                 />
               ) : (
-                formData.bodyType === 'template' && (
-                  <div className="p-10 bg-[#FAF9F6] rounded-2xl border border-dashed border-[#E9E4DB] text-center text-xs text-[#8C867A]">
-                    {formData.templateId
-                      ? `Selected: ${DUMMY_TEMPLATES.find((t) => t.id === formData.templateId)?.name}`
-                      : 'Select a template from the right sidebar.'}
-                  </div>
-                )
+                <div className="p-10 bg-[#FAF9F6] rounded-2xl border border-dashed border-[#E9E4DB] text-center text-xs text-[#8C867A]">
+                  {formData.templateId
+                    ? `Selected: ${DUMMY_TEMPLATES.find((t) => t.id === formData.templateId)?.name}`
+                    : 'Select a template from the right sidebar.'}
+                </div>
               )}
             </div>
 
-            {/* Combined Audience Section */}
+            {/* Audience Section */}
             <div className="bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#BAB3A9] flex items-center gap-2">
@@ -251,7 +225,7 @@ export default function CreateCampaign() {
                       {email}
                       <button
                         type="button"
-                        onClick={() => removeEmailTag(index)}
+                        // onClick={() => removeEmailTag(index)}
                         className="hover:text-red-500 transition-colors"
                       >
                         <X size={14} />
@@ -262,7 +236,12 @@ export default function CreateCampaign() {
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ',') {
+                        e.preventDefault();
+                        addEmailTag();
+                      }
+                    }}
                     onBlur={addEmailTag}
                     placeholder={
                       formData.emailsArray.length === 0
@@ -272,17 +251,14 @@ export default function CreateCampaign() {
                     className="flex-1 min-w-50 bg-transparent outline-none text-sm py-1.5 placeholder-[#BAB3A9]"
                   />
                 </div>
-
                 <div className="flex justify-between items-center px-1">
-                  <div className="flex items-center gap-3">
-                    <p className="text-[10px] font-bold text-[#BAB3A9] uppercase tracking-wider flex items-center gap-1.5">
-                      <MailPlus size={12} /> {formData.emailsArray.length}{' '}
-                      Recipients
-                    </p>
+                  <div className="flex items-center gap-3 text-[10px] font-bold text-[#BAB3A9] uppercase tracking-wider">
+                    <MailPlus size={12} /> {formData.emailsArray.length}{' '}
+                    Recipients
                     {formData.emailsArray.length > 0 && (
-                      <div className="flex items-center gap-1 text-[10px] text-green-600 font-bold uppercase tracking-wider">
-                        <FileCheck size={12} /> Ready to send
-                      </div>
+                      <span className="text-green-600 flex items-center gap-1">
+                        <FileCheck size={12} /> Deduplicated
+                      </span>
                     )}
                   </div>
                   {formData.emailsArray.length > 0 && (
@@ -298,21 +274,13 @@ export default function CreateCampaign() {
                   )}
                 </div>
               </div>
-
-              <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex gap-3 text-blue-800">
-                <Info size={16} className="shrink-0 mt-0.5" />
-                <p className="text-[11px] leading-relaxed italic">
-                  CSV files are processed locally and it remove all duplicates
-                  email automatically
-                </p>
-              </div>
             </div>
           </div>
 
-          {/* Right Column: Sidebar */}
+          {/* Right Column: Templates Sidebar */}
           <div className="lg:col-span-5">
             <div
-              className={`bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm transition-all duration-300 ${formData.bodyType === 'plain' ? ' hidden' : 'opacity-100'}`}
+              className={`bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm transition-all duration-300 ${formData.bodyType === 'plain' ? 'hidden' : 'opacity-100'}`}
             >
               <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#BAB3A9] flex items-center gap-2 mb-6">
                 <Layers size={12} /> Select Template
@@ -331,7 +299,7 @@ export default function CreateCampaign() {
                       <p className="text-xs font-bold text-[#433F39]">
                         {tmpl.name}
                       </p>
-                      <p className="text-[10px] text-[#BAB3A9] mt-1 font-mono">
+                      <p className="text-[10px] text-[#BAB3A9] mt-1 font-mono uppercase tracking-tighter">
                         {tmpl.id}
                       </p>
                     </div>
@@ -344,7 +312,7 @@ export default function CreateCampaign() {
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

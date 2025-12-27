@@ -60,9 +60,9 @@ export default function CampaignSection() {
   const [filter, setFilter] = useState<CampaignStatus | 'All'>('All');
 
   return (
-    <div className="min-h-screen w-full bg-[#FAF9F6] text-[#433F39]">
+    <div className="min-h-screen w-full  text-[#433F39]">
       {/* Header Area */}
-      <div className="p-8 md:p-12 pb-4">
+      <div className="py-8 md:py-12 pb-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h1 className="text-3xl font-serif italic tracking-tight">
@@ -109,7 +109,7 @@ export default function CampaignSection() {
       </div>
 
       {/* Campaign Cards Grid */}
-      <div className="p-8 md:p-12 pt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="py-8 md:py-12 pt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {CAMPAIGNS.filter((c) => filter === 'All' || c.status === filter).map(
           (campaign) => (
             <CampaignCard key={campaign.id} campaign={campaign} />

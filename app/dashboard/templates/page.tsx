@@ -94,8 +94,8 @@ export default function TemplateMarketplace() {
   const sortOptions = ['Free', 'Price: Low to High', 'Price: High to Low'];
 
   return (
-    <div className="min-h-screen w-full bg-[#FAF9F6] text-[#433F39] p-6 md:p-12">
-      <div className="max-w-350 mx-auto space-y-10">
+    <div className="min-h-screen w-full  text-[#433F39] py-6 md:py-12">
+      <div className=" space-y-10">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">

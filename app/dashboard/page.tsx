@@ -53,7 +53,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full bg-[#FAF9F6] flex text-[#433F39] font-sans">
       <main className="flex-1 overflow-y-auto">
-        <header className="h-20 bg-white/50 backdrop-blur-md border-b border-[#E9E4DB] px-10 flex items-center justify-between sticky top-0 z-10">
+        <header className="h-20 bg-white/50 backdrop-blur-md border-b border-[#E9E4DB]  flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[#BAB3A9]">
             <span>System Status:</span>
             <span className="flex items-center gap-1.5 text-green-600">
@@ -69,7 +69,7 @@ export default function Dashboard() {
           </Link>
         </header>
 
-        <div className="p-10 space-y-8 max-w-7xl mx-auto">
+        <div className="py-10 space-y-8  mx-auto">
           {/* Requirement: Google App Password Warning */}
           {!isConfigured && (
             <div className="bg-[#FDFCFB] border border-[#E9E4DB] p-8 rounded-4xl flex items-center justify-between shadow-sm">
