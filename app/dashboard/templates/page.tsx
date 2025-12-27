@@ -1,11 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Search,
-  Filter,
   ShoppingCart,
-  CreditCard,
-  Sparkles,
   ChevronDown,
   ArrowUpDown,
   Check,
@@ -20,7 +17,7 @@ const MARKETPLACE_DATA: TemplateMarketplaceItem[] = [
     price: 0,
     isFree: true,
     image:
-      'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=400',
+      'https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?auto=format&fit=crop&q=80&w=400',
   },
   {
     id: '2',
@@ -47,7 +44,7 @@ const MARKETPLACE_DATA: TemplateMarketplaceItem[] = [
     price: 12,
     isFree: false,
     image:
-      'https://images.unsplash.com/photo-1634655377962-e717a1c80891?auto=format&fit=crop&q=80&w=400',
+      'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=400',
   },
   {
     id: '5',

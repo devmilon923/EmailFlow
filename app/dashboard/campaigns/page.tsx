@@ -10,7 +10,10 @@ import {
   Calendar,
   ArrowRight,
   ChevronDown,
+  RecycleIcon,
+  RefreshCcw,
 } from 'lucide-react';
+import Link from 'next/link';
 
 // --- Types ---
 type CampaignStatus = 'Sent' | 'Draft' | 'Scheduled';
@@ -72,9 +75,12 @@ export default function CampaignSection() {
               Manage and track your email broadcasts.
             </p>
           </div>
-          <button className="bg-[#433F39] text-[#FAF9F6] px-8 py-3 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center justify-center gap-2 shadow-sm">
+          <Link
+            href={'/dashboard/campaigns/create'}
+            className="bg-[#433F39] cursor-pointer text-[#FAF9F6] px-8 py-3 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center justify-center gap-2 shadow-sm"
+          >
             + Create New
-          </button>
+          </Link>
         </div>
 
         {/* Filter & Search Bar */}
@@ -128,7 +134,7 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
       : '0';
 
   return (
-    <div className="bg-white border border-[#E9E4DB] rounded-4xl p-6 hover:shadow-md transition-all group relative flex flex-col justify-between">
+    <div className="bg-white border border-[#E9E4DB] rounded-4xl p-6 hover:shadow-sm transition-all group relative flex flex-col justify-between">
       <div>
         <div className="flex justify-between items-start mb-4">
           <StatusBadge status={campaign.status} />
@@ -147,7 +153,7 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
         <div className="mt-6 grid grid-cols-2 gap-4 p-4 bg-[#FAF9F6] rounded-2xl border border-[#F3EFE7]">
           <div>
             <p className="text-[10px] font-bold text-[#BAB3A9] uppercase tracking-tighter">
-              Reach
+              Contacts
             </p>
             <p className="text-lg font-serif">
               {campaign.sentCount.toLocaleString()}
@@ -169,12 +175,12 @@ function CampaignCard({ campaign }: { campaign: Campaign }) {
         </div>
 
         <div className="flex gap-2">
-          <button className="p-2.5 rounded-xl border border-[#E9E4DB] text-[#8C867A] hover:bg-[#FAF9F6] transition-colors flex items-center gap-2 group/btn">
+          <button className="p-2.5 cursor-pointer rounded-xl border border-[#E9E4DB] text-[#8C867A] hover:bg-[#FAF9F6] transition-colors flex items-center gap-2 group/btn">
             <Eye size={16} />
             <span className="text-xs font-bold">View More</span>
           </button>
-          <button className="bg-[#433F39] text-[#FAF9F6] p-2.5 rounded-xl hover:bg-[#2D2A26] transition-all">
-            <ArrowRight size={18} />
+          <button className="bg-[#433F39] cursor-pointer text-[#FAF9F6] p-2.5 rounded-xl hover:bg-[#2D2A26] transition-all">
+            <RefreshCcw size={18} />
           </button>
         </div>
       </div>

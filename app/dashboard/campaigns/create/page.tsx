@@ -117,7 +117,8 @@ export default function CreateCampaign() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => handleAction('draft')}
-              className="flex items-center gap-2 px-6 py-4 rounded-full border border-[#E9E4DB] bg-white text-xs font-bold uppercase tracking-widest hover:bg-[#F3EFE7] transition-all"
+              disabled={formData.emailsArray.length === 0 || !formData.subject}
+              className="flex items-center cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed gap-2 px-6 py-4 rounded-full border border-[#E9E4DB] bg-white text-xs font-bold uppercase tracking-widest hover:bg-[#F3EFE7] transition-all"
             >
               <Save size={16} /> Save Draft
             </button>
@@ -125,7 +126,7 @@ export default function CreateCampaign() {
             <button
               onClick={() => handleAction('launch')}
               disabled={formData.emailsArray.length === 0 || !formData.subject}
-              className="bg-[#433F39] disabled:opacity-30 text-[#FAF9F6] gap-2 px-6 py-4 rounded-full font-bold text-xs hover:bg-[#2D2A26] transition-all flex items-center  shadow-lg"
+              className="bg-[#433F39] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-[#FAF9F6] gap-2 px-6 py-4 rounded-full font-bold text-xs hover:bg-[#2D2A26] transition-all flex items-center  shadow-lg"
             >
               Launch Now <Send size={15} />
             </button>
