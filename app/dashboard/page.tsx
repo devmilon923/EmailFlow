@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  LayoutDashboard,
-  Mail,
-  Library,
-  Users,
-  Settings,
-  LogOut,
-  Key,
-  Plus,
-  ArrowUpRight,
-  Inbox,
-} from 'lucide-react';
+import { Users, Key, Plus, ArrowUpRight, Inbox } from 'lucide-react';
+import Link from 'next/link';
 
 // --- Types ---
 interface Campaign {
@@ -61,36 +51,7 @@ export default function Dashboard() {
   const isConfigured = false; // Mock state for the App Password requirement
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] flex text-[#433F39] font-sans">
-      {/* Sidebar */}
-      <aside className="w-72 bg-[#F3EFE7] border-r border-[#E9E4DB] flex flex-col sticky top-0 h-screen">
-        <div className="p-8 border-b border-[#E9E4DB]">
-          <h1 className="text-2xl font-serif italic tracking-tight flex items-center gap-2">
-            <Mail className="w-6 h-6 text-[#8C867A]" /> EmailFlow
-          </h1>
-        </div>
-
-        <nav className="flex-1 p-6 space-y-2">
-          <NavItem
-            icon={<LayoutDashboard size={18} />}
-            label="Overview"
-            active
-          />
-          <NavItem icon={<Mail size={18} />} label="Campaigns" />
-          <NavItem icon={<Library size={18} />} label="Templates" />
-          <NavItem icon={<Users size={18} />} label="Recipients" />
-          <NavItem icon={<Settings size={18} />} label="Settings" />
-        </nav>
-
-        <div className="p-6 border-t border-[#E9E4DB]">
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-[#8C867A] hover:text-red-600 transition-colors">
-            <LogOut size={18} />
-            <span className="text-sm font-medium">Logout</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
+    <div className="min-h-screen w-full bg-[#FAF9F6] flex text-[#433F39] font-sans">
       <main className="flex-1 overflow-y-auto">
         <header className="h-20 bg-white/50 backdrop-blur-md border-b border-[#E9E4DB] px-10 flex items-center justify-between sticky top-0 z-10">
           <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[#BAB3A9]">
@@ -100,9 +61,12 @@ export default function Dashboard() {
               Online
             </span>
           </div>
-          <button className="bg-[#433F39] text-[#FAF9F6] px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center gap-2">
+          <Link
+            href={'/dashboard/campaigns/create'}
+            className="bg-[#433F39] text-[#FAF9F6] px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#2D2A26] transition-all flex items-center gap-2"
+          >
             <Plus size={16} /> New Campaign
-          </button>
+          </Link>
         </header>
 
         <div className="p-10 space-y-8 max-w-7xl mx-auto">
