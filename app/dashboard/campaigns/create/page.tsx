@@ -213,11 +213,13 @@ export default function CreateCampaign() {
                   className="w-full h-40 bg-[#FAF9F6] border border-[#E9E4DB] rounded-2xl p-6 outline-none text-sm resize-none"
                 />
               ) : (
-                <div className="p-10 bg-[#FAF9F6] rounded-2xl border border-dashed border-[#E9E4DB] text-center text-xs text-[#8C867A]">
-                  {formData.templateId
-                    ? `Selected: ${DUMMY_TEMPLATES.find((t) => t.id === formData.templateId)?.name}`
-                    : 'Select a template from the right sidebar.'}
-                </div>
+                formData.bodyType === 'template' && (
+                  <div className="p-10 bg-[#FAF9F6] rounded-2xl border border-dashed border-[#E9E4DB] text-center text-xs text-[#8C867A]">
+                    {formData.templateId
+                      ? `Selected: ${DUMMY_TEMPLATES.find((t) => t.id === formData.templateId)?.name}`
+                      : 'Select a template from the right sidebar.'}
+                  </div>
+                )
               )}
             </div>
 
@@ -300,8 +302,8 @@ export default function CreateCampaign() {
               <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex gap-3 text-blue-800">
                 <Info size={16} className="shrink-0 mt-0.5" />
                 <p className="text-[11px] leading-relaxed italic">
-                  CSV files are processed locally. Emails found in the file will
-                  automatically appear as tags above.
+                  CSV files are processed locally and it remove all duplicates
+                  email automatically
                 </p>
               </div>
             </div>
@@ -310,7 +312,7 @@ export default function CreateCampaign() {
           {/* Right Column: Sidebar */}
           <div className="lg:col-span-5">
             <div
-              className={`bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm transition-all duration-300 ${formData.bodyType === 'plain' ? 'opacity-40 grayscale pointer-events-none scale-[0.98]' : 'opacity-100'}`}
+              className={`bg-white border border-[#E9E4DB] rounded-[2.5rem] p-8 shadow-sm transition-all duration-300 ${formData.bodyType === 'plain' ? ' hidden' : 'opacity-100'}`}
             >
               <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#BAB3A9] flex items-center gap-2 mb-6">
                 <Layers size={12} /> Select Template
